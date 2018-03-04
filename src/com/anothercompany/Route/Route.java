@@ -1,17 +1,16 @@
-package com.company.Route;
+package com.anothercompany.Route;
 
+import com.anothercompany.Blocks.Block;
 import com.company.Blocks.Node;
-import com.company.Blocks.Signal;
-import com.company.Blocks.Lock;
+import com.anothercompany.Lock.Lock;
 
 import java.util.List;
 
 public interface Route {
-    public int getRouteId();
+    public String getRouteId();
     public String getstartSignalName();
     public String getEndSignalName();
-    public boolean setRoute(final Signal start, final Signal destination);
     public List<Route> conflictsList(final List<Route> allRoutes);
-    public List<Node> getPath();
+    public List<Block> getPath();
     public Lock getRouteLockState();
 }

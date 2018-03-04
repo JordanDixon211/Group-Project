@@ -1,4 +1,4 @@
-package com.company.Blocks;
+package com.anothercompany.Lock;
 
 public final class Lock {
     private String currentLockStatus = "unlocked";

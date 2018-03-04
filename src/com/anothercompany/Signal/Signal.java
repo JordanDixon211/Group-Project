@@ -3,6 +3,7 @@ package com.anothercompany.Signal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Signal {
     private final static Map<String, Signal>  objectMap = new HashMap<>();
@@ -63,4 +64,17 @@ public class Signal {
         return "Signal Name: " + this.getName() + " Access Direction: " + this.getAccessDirection() + " State: " + this.getStatus();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Signal signal = (Signal) o;
+        return Objects.equals(name, signal.name);
+    }
+
+    @Override
+    public int hashCode() {
+        int hc = 57;
+        return Objects.hash(name) * hc;
+    }
 }

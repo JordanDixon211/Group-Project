@@ -1,17 +1,18 @@
 package com.anothercompany.Blocks;
 import com.anothercompany.Signal.Signal;
 
-import java.awt.*;
-import java.util.Map;
-
 public class Section extends AbstractBlock {
     private Signal s1;
     private Signal s2;
     private Section down;
     private Section up;
+    private String position;
 
-    public Section(final String name,final Section down,final Section up) {
+    public Section(final String name,final Section down,final Section up, final String position) {
         super(name);
+
+        if (position != null)
+            this.position = position;
 
         if (down != null){
             Signal s1 = Signal.createSignal("Down");
@@ -69,6 +70,10 @@ public class Section extends AbstractBlock {
 
     public Section getUp() {
         return up;
+    }
+
+    public String getPosition(){
+        return this.position;
     }
 
 }

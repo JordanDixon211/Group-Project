@@ -14,7 +14,6 @@ import java.util.Map;
 public class Point extends AbstractBlock{
     private final static String MINUS = "MINUS";
     private final static String PLUS = "PLUS";
-    private String Id;
     private String pointStatus;
     private Map<String, Block> neighbourMap;
 
@@ -24,9 +23,8 @@ public class Point extends AbstractBlock{
 
 
     //部分返回值block， 更为sction更为合理 some of the return value is block, but change to sction is better
-    public Block createPoint(String Id, Map<String, Block> neighbourMap, String signal) {
+    public Block createPoint(Map<String, Block> neighbourMap, String signal) {
         if (neighbourMap.size() == 3) {
-            this.Id = Id;
             this.neighbourMap = neighbourMap;
             if (signal.equals(MINUS) || signal.equals(PLUS)) {
                 Block neighbour = neighbourMap.get(MINUS);
@@ -54,9 +52,6 @@ public class Point extends AbstractBlock{
         return block.getStatus();
     }
 
-
-
-
     @Override
     public Block getNeighbour(String positionn) {
         return null;
@@ -64,7 +59,7 @@ public class Point extends AbstractBlock{
 
     @Override
     public String getStatus() {
-        return null;
+        return pointStatus;
     }
 
 
