@@ -39,7 +39,6 @@ public class RouteImp implements Route {
                 //our route.
                 for (int i = 0; i < railwayModel.size(); i++) {
                     Block block = railwayModel.get(i);
-
                     if (block instanceof Section) {
                         boolean changed = false;
                         Section section = (Section) block;
@@ -50,14 +49,22 @@ public class RouteImp implements Route {
                             findStartSignal = section.getS2();
                             changed = true;
                         }
-
                         if (!changed){
                             if (section.getS1().equals(end)) {
                                 findEndSignal = section.getS1();
+                                break;
                             } else if (section.getS2().equals(end)) {
                                 findEndSignal = section.getS2();
+                                break;
                             }
                         }
+                        //if startSignal is not equal to null, I have found the start signal, therefore any path after this can be added to list, and
+                        //refined later.
+                        if (findStartSignal != null) {
+                            theRoute.add(block);
+                        }
+
+                        //point will be added regardless, now only focus on the point block after the point!.
                     } else if (block instanceof Point) {
                         //now check both directions, check what is on the minus side of the current path.
                         //then check what is on the positive side.
@@ -69,55 +76,68 @@ public class RouteImp implements Route {
                                     && nextBlock.getS1().equals(start) && nextBlock.getS1().getAccessDirection().equals("Up")){
                                 findStartSignal = nextBlock.getS1();
                                 changed = true;
+                                theRoute.add(block);
                             }
 
                             else if (nextBlock.getPosition().equals("Minus")
                                     && nextBlock.getS1().equals(start) && nextBlock.getS2().getAccessDirection().equals("Up")){
                                 findStartSignal = nextBlock.getS1();
                                 changed = true;
+                                theRoute.add(block);
                             }
 
                             else if (nextBlock.getPosition().equals("Plus")
                                     && nextBlock.getS1().equals(start) && nextBlock.getS1().getAccessDirection().equals("Up")){
                                 findStartSignal = nextBlock.getS1();
                                 changed = true;
+                                theRoute.add(block);
                             }
 
                             else if (nextBlock.getPosition().equals("Plus")
                                     && nextBlock.getS1().equals(start) && nextBlock.getS2().getAccessDirection().equals("Up")){
                                 findStartSignal = nextBlock.getS1();
                                 changed = true;
+                                theRoute.add(block);
                             }
 
                             if (!changed){
                                 if (nextBlock.getPosition().equals("Minus")
                                         && nextBlock.getS1().equals(end) && nextBlock.getS1().getAccessDirection().equals("Up")){
                                     findEndSignal = nextBlock.getS1();
+                                    theRoute.add(block);
+                                    break;
                                 }
 
                                 else if (nextBlock.getPosition().equals("Minus")
-                                        && nextBlock.getS1().equals(end) && nextBlock.getS2().getAccessDirection().equals("Up")){
+                                        && nextBlock.getS2().equals(end) && nextBlock.getS2().getAccessDirection().equals("Up")){
                                     findEndSignal = nextBlock.getS1();
+                                    theRoute.add(block);
+                                    break;
                                 }
 
                                 else if (nextBlock.getPosition().equals("Plus")
                                         && nextBlock.getS1().equals(end) && nextBlock.getS1().getAccessDirection().equals("Up")){
                                     findEndSignal = nextBlock.getS1();
+                                    theRoute.add(block);
+                                    break;
                                 }
 
                                 else if (nextBlock.getPosition().equals("Plus")
-                                        && nextBlock.getS1().equals(end) && nextBlock.getS2().getAccessDirection().equals("Up")){
+                                        && nextBlock.getS2().equals(end) && nextBlock.getS2().getAccessDirection().equals("Up")){
                                     findEndSignal = nextBlock.getS1();
+                                    theRoute.add(block);
+                                    break;
                                 }
                             }
                         }
                     }
                 }
-                if (findStartSignal == null)
-                    throw new IllegalStateException("To define a route a start signal must exist!");
 
+                if (findStartSignal == null || findEndSignal == null)
+                    throw new IllegalStateException("To define a route a start and a end signal must exist!");
 
             }else if (direction.toLowerCase().equals("down")){
+                //if its down need to reverse traversal, makes it easier to find start/ end positions.
 
             }
         }
