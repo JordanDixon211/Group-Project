@@ -171,7 +171,7 @@ public class RouteImp implements Route {
                             //Just stick to plus position, this will work if the starting position is
                             //not in the minus or plus position
                             if (!changed && findStartSignal != null && findEndSignal == null){
-                                if (nextBlock.getPosition().equals("plus"))
+                                if (nextBlock.getPosition().equals("Plus"))
                                 theRoute.add(nextBlock);
                             }
                         }
@@ -193,10 +193,14 @@ public class RouteImp implements Route {
         }
     }
 
-    private boolean calculateSignals(Railway model, List<Block> route) {
+    private void calculateSignals(Railway model, List<Block> route) {
 
     }
 
+
+    private void calculatePoints(Railway model, List<Block> route) {
+
+    }
 
     @Override
     public String getRouteId() {
